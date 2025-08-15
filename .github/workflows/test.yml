@@ -1,0 +1,128 @@
+name: 🧪 Test LLM Formula Generator
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+    
+    - name: 🏗️ Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+    
+    - name: 📦 Install dependencies
+      run: npm ci
+    
+    - name: 🧪 Run comprehensive test suite
+      run: npm test
+      env:
+        NODE_ENV: test
+
+  documentation-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+    
+    - name: 📋 Verify documentation completeness
+      run: |
+        echo "Checking required documentation files..."
+        
+        required_files=(
+          "README.md"
+          "QUICKSTART.md" 
+          "SHOWCASE.md"
+          "TESTING.md"
+          "LICENSE"
+          "package.json"
+          "apps-script/Code.gs"
+          "server/formulas.js"
+          "server/server.js"
+        )
+        
+        missing_files=()
+        
+        for file in "${required_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✅ $file"
+          else
+            echo "❌ $file (missing)"
+            missing_files+=("$file")
+          fi
+        done
+        
+        if [ ${#missing_files[@]} -eq 0 ]; then
+          echo "📚 All documentation files present"
+        else
+          echo "❌ Missing documentation files: ${missing_files[*]}"
+          exit 1
+        fi
+    
+    - name: 🔍 Check documentation quality
+      run: |
+        echo "Checking documentation quality..."
+        
+        # Check README has key sections
+        if grep -q "Quick Start" README.md && \
+           grep -q "Testing" README.md && \
+           grep -q "Usage" README.md; then
+          echo "✅ README.md has all required sections"
+        else
+          echo "❌ README.md missing key sections"
+          exit 1
+        fi
+        
+        # Check QUICKSTART.md
+        if grep -q "Setup" QUICKSTART.md && \
+           grep -q "Test" QUICKSTART.md; then
+          echo "✅ QUICKSTART.md is complete"
+        else
+          echo "❌ QUICKSTART.md is incomplete"
+          exit 1
+        fi
+        
+        echo "📖 Documentation quality check passed"
+
+  deployment-readiness:
+    runs-on: ubuntu-latest
+    needs: [test, documentation-check]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+    
+    - name: ✅ Deployment readiness check
+      run: |
+        echo "🎉 All tests passed! Project is ready for deployment."
+        echo ""
+        echo "📋 Deployment Options:"
+        echo "  1. GitHub Codespaces (60h/month free)"
+        echo "  2. Local development (unlimited)"
+        echo "  3. Railway.app (free tier)" 
+        echo "  4. Replit (public demo)"
+        echo ""
+        echo "🚀 Next steps:"
+        echo "  1. Choose deployment platform"
+        echo "  2. Follow QUICKSTART.md guide"
+        echo "  3. Test with Google Sheets"
+        echo ""
+        echo "💡 No GitHub Codespaces hours consumed during testing!"
+
+# Last updated: 2025-08-14 22:01:54
+# Author: om-pramod

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Formula Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LLM Formula Generator</h1>
+            <p>Generate Google Sheets formulas with the power of AI</p>
+        </header>
+        <main>
+            <form id="formula-form">
+                <div class="form-group">
+                    <label for="description">Describe what you want to calculate:</label>
+                    <input type="text" id="description" placeholder="e.g., 'calculate the average of positive numbers'" required>
+                </div>
+                <div class="form-group">
+                    <label for="range">What is the cell range?</label>
+                    <input type="text" id="range" placeholder="e.g., 'A2:A10'" required>
+                </div>
+                <button type="submit" id="generate-btn">Generate Formula</button>
+            </form>
+            <div class="result-area">
+                <h2>Generated Formula:</h2>
+                <div class="result-header">
+                    <span id="formula-source" class="source-tag"></span>
+                    <button id="copy-btn" class="copy-btn" title="Copy to clipboard" style="display: none;">Copy</button>
+                </div>
+                <div id="result" class="result-box">
+                    <p class="placeholder">Your formula will appear here...</p>
+                </div>
+                <div id="loading" class="loading-spinner" style="display: none;"></div>
+            </div>
+        </main>
+        <footer>
+            <p>Powered by Local LLMs</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

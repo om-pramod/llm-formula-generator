@@ -1,0 +1,45 @@
+{
+  "name": "llm-formula-generator",
+  "version": "1.0.0",
+  "description": "100% free Google Sheets formula generator using local LLM",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "test": "node tests/test-formulas.js",
+    "setup-ollama": "curl -fsSL https://ollama.ai/install.sh | sh && ollama pull phi3:mini",
+    "health-check": "curl -f http://localhost:3000/health || echo 'Server not running'",
+    "deploy-check": "echo 'Ready for deployment - see docs/DEPLOYMENT.md'"
+  },
+  "keywords": [
+    "google-sheets",
+    "llm", 
+    "ai",
+    "formulas",
+    "free",
+    "ollama",
+    "apps-script",
+    "automation"
+  ],
+  "author": "om-pramod",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/om-pramod/llm-formula-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/om-pramod/llm-formula-generator/issues"
+  },
+  "homepage": "https://github.com/om-pramod/llm-formula-generator#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

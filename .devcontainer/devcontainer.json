@@ -1,0 +1,32 @@
+{
+  "name": "LLM Formula Generator",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:16",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": [
+        "ms-vscode.vscode-node-azure-pack",
+        "ms-vscode.vscode-json",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "LLM Formula Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "npm run install-deps",
+  "postStartCommand": "echo '🚀 To setup: curl -fsSL https://ollama.ai/install.sh | sh && ollama pull phi3:mini && npm start'"
+}
